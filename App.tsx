@@ -1,4 +1,4 @@
-import NewsList from "./src/pages/NewsList"
+import NewsList from "./src/pages/NewsListScreen"
 
 export default function App() {
   return <NewsList />

@@ -8,10 +8,14 @@ import {
 import { NewsItem } from "../components/news/NewsItem"
 import articles_dummy from "../constans/articles.json"
 import { article } from "../types/article"
+import Constants from "expo-constants"
+
 const NewsList = () => {
   const [articles, setArticles] = useState<article[]>([])
 
   useEffect(() => {
+    alert(Constants.manifest.extra.NEWS_API_KEY)
+
     setArticles(articles_dummy)
   }, [articles])
 
