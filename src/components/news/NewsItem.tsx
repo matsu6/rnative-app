@@ -1,21 +1,29 @@
+import { FC } from "react"
 import { StyleSheet, View, Image, Text } from "react-native"
-import { LOREMIPSUM } from "../../constans/sampleData"
-export const NewsItem = () => {
+
+type Props = {
+  imageUrl: string
+  description: string
+  author: string
+}
+
+export const NewsItem: FC<Props> = (props) => {
+  const { imageUrl, description, author } = props
   return (
     <View style={styles.itemContainer}>
       <View style={styles.leftContainer}>
         <Image
           style={{ width: 100, height: 100 }}
           source={{
-            uri: "https://picsum.photos/seed/picsum/200/300",
+            uri: imageUrl,
           }}
         />
       </View>
       <View style={styles.rightContainer}>
         <Text style={styles.text} numberOfLines={3}>
-          {LOREMIPSUM}
+          {description}
         </Text>
-        <Text style={styles.subText}>ReactNews</Text>
+        <Text style={styles.subText}>{author}</Text>
       </View>
     </View>
   )
@@ -43,6 +51,5 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 12,
     color: "gray",
-    // marginTop: 3,
   },
 })
