@@ -6,17 +6,25 @@ import {
   SafeAreaView,
 } from "react-native"
 import { NewsItem } from "../components/news/NewsItem"
-import articles_dummy from "../constans/articles.json"
-import { article } from "../types/article"
+import { article, articles } from "../types/article"
 import Constants from "expo-constants"
-
+import { NEWSURL } from "../constans/newsData"
+import axios, { AxiosResponse } from "axios"
 const NewsList = () => {
   const [articles, setArticles] = useState<article[]>([])
 
-  useEffect(() => {
-    alert(Constants.manifest.extra.NEWS_API_KEY)
+  const getArticles = async () => {
+    const url = `${NEWSURL}&apiKey=${Constants.manifest.extra.NEWS_API_KEY}`
+    try {
+      const res: AxiosResponse<articles> = await axios.get(url)
+      setArticles(res.data.articles)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
-    setArticles(articles_dummy)
+  useEffect(() => {
+    getArticles()
   }, [articles])
 
   const renderItem = (ListRenderItemInfo: ListRenderItemInfo<article>) => {
