@@ -1,16 +1,16 @@
 import { FC } from "react"
-import { StyleSheet, View, Image, Text } from "react-native"
-
+import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native"
 type Props = {
   imageUrl: string
   description: string
   author: string
+  onPress: () => void
 }
 
 export const NewsItem: FC<Props> = (props) => {
-  const { imageUrl, description, author } = props
+  const { imageUrl, description, author, onPress } = props
   return (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
       <View style={styles.leftContainer}>
         {!!imageUrl && (
           <Image
@@ -27,7 +27,7 @@ export const NewsItem: FC<Props> = (props) => {
         </Text>
         <Text style={styles.subText}>{author}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

@@ -1,5 +1,8 @@
-import NewsList from "./src/pages/NewsListScreen"
+import AppNavigator from "./src/navigation/AppNavigator"
+import HomeScreen from "./src/screens/HomeScreen"
 
-export default function App() {
-  return <NewsList />
+const App = () => {
+  return <AppNavigator />
 }
+
+export default App
