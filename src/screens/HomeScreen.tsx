@@ -13,26 +13,37 @@ import axios, { AxiosResponse } from "axios"
 import news_dummy from "../constans/news.json"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { RootStackParamList } from "../types/navigation/rootStackParamList"
-
+import { Loading } from "../components/Loading"
 type HomeNavigationProps = NativeStackScreenProps<RootStackParamList, "Home">
 
 const HomeScreen: FC<HomeNavigationProps> = (props) => {
+  const [loading, setIsLoading] = useState(false)
   const { navigation } = props
   const [articles, setArticles] = useState<article[]>([])
 
-  // const getArticles = async () => {
-  //   const url = `${NEWSURL}&apiKey=${Constants.manifest.extra.NEWS_API_KEY}`
-  //   try {
-  //     const res: AxiosResponse<articles> = await axios.get(url)
-  //     setArticles(res.data.articles)
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }
+  const getArticles = async () => {
+    const url = `${NEWSURL}&apiKey=${Constants.manifest.extra.NEWS_API_KEY}`
+    try {
+      setIsLoading(true)
+      const res: AxiosResponse<articles> = await axios.get(url)
+      setArticles(res.data.articles)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
     // getArticles() //URLリクエスト 上限あり
-    setArticles(news_dummy[0].articles) //ダミーデータ
+    try {
+      setIsLoading(true)
+      setArticles(news_dummy[0].articles) //ダミーデータ
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setIsLoading(false)
+    }
   }, [])
 
   const renderItem = (ListRenderItemInfo: ListRenderItemInfo<article>) => {
@@ -52,6 +63,7 @@ const HomeScreen: FC<HomeNavigationProps> = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList data={articles} renderItem={renderItem} />
+      {loading && <Loading />}
     </SafeAreaView>
   )
 }
